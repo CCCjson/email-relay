@@ -1,0 +1,26 @@
+# Local env files must never reach the deployment bundle.
+#
+# Two reasons:
+# 1. Security: .env holds real credentials, which have no business being in a
+#    deployment artifact.
+# 2. Correctness: the Next.js runtime loads .env. Platform-injected variables
+#    take precedence, so most variables look "normal" - but a variable that
+#    exists ONLY in .env and is not set on the platform still takes effect.
+#    That is how RESEND_BASE_URL leaked into production: it pointed at
+#    http://localhost:4010, every send failed, and the SDK swallowed the
+#    underlying exception into a vague "Unable to fetch data" that took a long
+#    time to trace.
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Local build output
+node_modules
+.next
+lib/generated
+
+# Tests and local-only scripts; not needed in production
+tests
+scripts/mock-resend.mjs
+scripts/demo.mjs

@@ -1,0 +1,45 @@
+{
+  "name": "email-relay",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "watch": "node scripts/watch.mjs",
+    "demo": "node scripts/demo.mjs",
+    "mock": "node scripts/mock-resend.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "@prisma/adapter-neon": "^7.10.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "email-reply-parser": "^2.3.9",
+    "html-to-text": "^10.0.1",
+    "next": "14.2.35",
+    "openai": "^7.13.0",
+    "pg": "^8.23.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "resend": "^6.27.0",
+    "zod": "^4.6.1"
+  },
+  "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "dotenv": "^17.4.2",
+    "postcss": "^8.4.49",
+    "prisma": "^7.10.0",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.7.2",
+    "vitest": "^5.0.0"
+  }
+}

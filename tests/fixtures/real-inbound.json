@@ -1,0 +1,35 @@
+{
+  "object": "email",
+  "id": "8af6fa43-3a50-41dc-853b-4a5b1f8644d0",
+  "to": [
+    "reply+00000000deadbeef@cccjsonstakexxxx828.com"
+  ],
+  "from": "relay@cccjsonstakexxxx828.com",
+  "created_at": "2026-09-10T08:32:18.051Z",
+  "subject": "Inbound probe 2 [#0000]",
+  "message_id": "<010601a08a7235fa-7c64e2cd-6c8f-488e-a0a1-ec13d714ba2c-000000@ap-northeast-1.amazonses.com>",
+  "bcc": [],
+  "cc": [],
+  "reply_to": [],
+  "html": null,
+  "html_format": "data_uri",
+  "text": "Probe body line one.\n\nOn Mon, Sep 10, 2026 at 10:00 AM Someone <someone@example.com> wrote:\n\n> quoted text that must be stripped\n\n-- \nProbe Signature\n",
+  "headers": {
+    "x-ses-spam-verdict": "PASS",
+    "x-ses-virus-verdict": "PASS",
+    "x-ses-receipt": "AEFBQUFBQUFBQUFFZmc5aGNiWDRacTY3dVdyZGNPYis3WGk1aFZwQzI2N3ZwWTBoWW45ajJ6bStNMGJnb0hhVm1RRGV4ZEhpRXdLb3NscFBETjZWZGxwSjZ1T1d3UjM4ak1yOS9HaW9tUUV6TDZPWjlKeFFTSG40UjZyc2ptekNuc3BMdmt2SHArSEFJSGYvWC9ta2Rhdi9GSVB1c2ozN0hhWnVyL1NSc3hJaGxqLzdvVXY1Q0xBZnlBNlZFY3MvcDRrSm1JUFdUR0Qva014L0c2aFJCMTZ1L3piRXFTN1E4QUFPWnB4VGxWL2N4ZmQzVEJJWm1HQVFCeXB0L0JYblc5VW5aU2k1bDFueXlDUFd5Z2F4ZldTelpPNlFQa000MSttMUhQTDZzWHhzejB0UG9PREh6c2VkN2NCdVJMNis1ejkvQ1F4QjhybEdkU3JhbXk3N0NEYmYvSnFQL25wMVlmRWJXVW53eFprd2JOSllZZ0xBM0JzdGxPWW5mQWE5RmY4UVcrNURsY1RVPQ==",
+    "x-ses-dkim-signature": "a=rsa-sha256; q=dns/txt; b=Mr43YyUbWQI6dJw3LmmsFX1+LkS8PkW3hANkTp2y6gzgF9Yk0LtrbU0C89H7TIynISDnEA7l69OW4bd0BTkC6HueD02X7olkHrWLIMSzU29jVF6nlT16ZKJCq7TNMW1h4CRXwA1x93F0UdlS2JIUpc7S8ITXIEM8lt+ODPL1qoM=; c=relaxed/simple; s=zh4gjftm6etwoq6afzugpky45synznly; d=amazonses.com; t=1789029137; v=1; bh=pCMqVSc3Cs7miEiDAuiFVr+vq5wq2Ru804KMhlFj26E=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;",
+    "from": "\"Relay Probe\" <relay@cccjsonstakexxxx828.com>",
+    "to": "reply+00000000deadbeef@cccjsonstakexxxx828.com",
+    "subject": "Inbound probe 2 [#0000]",
+    "message-id": "<010601a08a7235fa-7c64e2cd-6c8f-488e-a0a1-ec13d714ba2c-000000@ap-northeast-1.amazonses.com>",
+    "content-transfer-encoding": "7bit",
+    "date": "\"2026-09-10T08:32:15.000Z\"",
+    "mime-version": "1.0",
+    "content-type": "text/plain"
+  },
+  "received_for": [
+    "reply+00000000deadbeef@cccjsonstakexxxx828.com"
+  ],
+  "attachments": []
+}

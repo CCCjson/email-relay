@@ -1,0 +1,112 @@
+// Email Relay — data model
+// The unique constraint on providerMessageId is the entire idempotency story:
+// a webhook retry hits an insert conflict, answers 200 and creates no duplicate row.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+enum Direction {
+  OUTBOUND
+  INBOUND
+}
+
+enum Status {
+  VISIBLE
+  HELD
+}
+
+enum Channel {
+  SLACK
+  EMAIL
+}
+
+model Thread {
+  id            String    @id @default(cuid())
+  /// The token in reply+<token>@inbound.domain: 16 random hex characters, to prevent enumeration
+  token         String    @unique
+  /// The short [#xxxx] tag carried in the subject, used by layer-3 thread matching
+  tag           String
+  senderEmail   String
+  receiverEmail String
+  notifyEmail   String?
+  subject       String
+  /// Message-ID of the most recent outbound email, looked up by layer-2 matching (In-Reply-To / References)
+  lastMessageId String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  messages      Message[]
+
+  @@index([senderEmail, receiverEmail])
+  @@index([updatedAt])
+}
+
+model Message {
+  id       String    @id @default(cuid())
+  threadId String
+  thread   Thread    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  direction Direction
+
+  fromEmail String
+  toEmail   String
+
+  /// Always stores the original; filtering affects visibility, never storage
+  bodyRaw      String  @db.Text
+  /// The body after quote and signature stripping
+  bodyStripped String  @db.Text
+  bodyHtml     String? @db.Text
+
+  /// Outbound: the id Resend returns. Inbound: Resend's email_id. Unique, which gives idempotency
+  providerMessageId String  @unique
+  /// The outbound email's own Message-ID header
+  rfcMessageId      String?
+  inReplyTo         String?
+  references        String?
+
+  status           Status  @default(VISIBLE)
+  /// Which stage matched: 1 = wordlist, 2 = model, null = no match
+  filterStage      Int?
+  filterCategories Json?
+  filterScore      Float?
+  filterReason     String?
+  /// Stage 2 timed out or errored and took the fail-open path
+  filterDegraded   Boolean @default(false)
+
+  /// v1 discards attachments and only records the count
+  attachmentCount Int @default(0)
+
+  createdAt     DateTime       @default(now())
+  notifications Notification[]
+
+  @@index([threadId, createdAt])
+  @@index([status])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  channel   Channel
+  ok        Boolean
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([messageId])
+}
+
+/// Inbound emails that missed all three matching layers. Never silently dropped:
+/// when a reply does not arrive during a demo, the reason has to be findable immediately.
+model UnmatchedInbound {
+  id        String   @id @default(cuid())
+  payload   Json
+  reason    String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
